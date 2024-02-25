@@ -25,6 +25,10 @@ public class Report {
     @JoinColumn(name = "student_id", nullable = false)
     private StudentUser studentUser;
 
+    @ManyToOne
+    @JoinColumn(name = "admin_user_id", nullable = false)
+    private AdminUser adminUser;
+    
     @ManyToMany
     @JoinTable(
         name = "report_inventory_items",
