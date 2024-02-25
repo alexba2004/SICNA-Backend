@@ -8,7 +8,7 @@ import java.util.List;
 public class StudentUser {
    
    @Id
-   @Column(name = "student_id", nullable = false, unique = true)
+   @Column(name = "student_id", nullable = false, unique = true, length = 6)
    private String studentId; // Matrícula
 
    @Column(nullable = false)

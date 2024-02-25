@@ -8,7 +8,7 @@ import java.util.List;
 public class AdminUser {
    
    @Id
-   @Column(name = "employee_number", nullable = false, unique = true)
+   @Column(name = "employee_number", nullable = false, unique = true, length = 7)
    private String employeeNumber; // Número de trabajador
 
    @Column(nullable = false)
