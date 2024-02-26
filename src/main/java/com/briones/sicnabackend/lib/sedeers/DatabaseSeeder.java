@@ -59,19 +59,19 @@ public class DatabaseSeeder implements CommandLineRunner {
 
     private void seedStudentUsers() {
         if (studentUserRepository.count() == 0) {
-            saveStudentUser("200000", "Jose Alejandro Briones Arroyo", "+1122334455", "alejandro@example.com", "estudiante123");
-            saveStudentUser("200003", "Luis Octavio Lopez Martinez", "+9988776655", "luis@example.com", "estudiante012");
-            saveStudentUser("200001", "Carlos Sánchez", "+9988776655", "carlos@example.com", "estudiante456");
-            saveStudentUser("200002", "Elena Gómez", "+1122334455", "elena@example.com", "estudiante789");
+            saveStudentUser(200000L, "Jose Alejandro Briones Arroyo", "+1122334455", "alejandro@example.com", "estudiante123");
+            saveStudentUser(200003L, "Luis Octavio Lopez Martinez", "+9988776655", "luis@example.com", "estudiante012");
+            saveStudentUser(200001L, "Carlos Sánchez", "+9988776655", "carlos@example.com", "estudiante456");
+            saveStudentUser(200002L, "Elena Gómez", "+1122334455", "elena@example.com", "estudiante789");
         }
     }
 
     private void seedAdminUsers() {
         if (adminUserRepository.count() == 0) {
-            saveAdminUser("2000002", "Joan Salas Vera", "+1122334455", "joan@example.com", "contraseña789");
-            saveAdminUser("2000000", "Juan Pérez", "+1234567890", "juan@example.com", "contraseña123");
-            saveAdminUser("2000001", "María García", "+1987654321", "maria@example.com", "contraseña456");
-            saveAdminUser("2000003", "Ana Martínez", "+9988776655", "ana@example.com", "contraseña012");
+            saveAdminUser(2000002L, "Joan Salas Vera", "+1122334455", "joan@example.com", "contraseña789");
+            saveAdminUser(2000000L, "Juan Pérez", "+1234567890", "juan@example.com", "contraseña123");
+            saveAdminUser(2000001L, "María García", "+1987654321", "maria@example.com", "contraseña456");
+            saveAdminUser(2000003L, "Ana Martínez", "+9988776655", "ana@example.com", "contraseña012");
         }
     }
 
@@ -95,14 +95,14 @@ public class DatabaseSeeder implements CommandLineRunner {
 
     private void seedReports() {
         if (reportRepository.count() == 0) {
-            saveReport(new Date(), "Monitor roto", "ADEUDO", "200000", "2000002");
-            saveReport(new Date(), "Teclado sin 4 teclas", "PAGADO", "200003", "2000000");
-            saveReport(new Date(), "Ratón desgastado", "ADEUDO", "200001", "2000001");
-            saveReport(new Date(), "CPU con problemas de arranque", "PAGADO", "200002", "2000003");
+            saveReport(new Date(), "Monitor roto", "ADEUDO", 200000L, 2000002L);
+            saveReport(new Date(), "Teclado sin 4 teclas", "PAGADO", 200003L, 2000000L);
+            saveReport(new Date(), "Ratón desgastado", "ADEUDO", 200001L, 2000001L);
+            saveReport(new Date(), "CPU con problemas de arranque", "PAGADO", 200002L, 2000003L);
         }
     }
 
-    private void saveStudentUser(String studentId, String name, String phoneNumber, String email, String password) {
+    private void saveStudentUser(Long studentId, String name, String phoneNumber, String email, String password) {
         StudentUser studentUser = new StudentUser();
         studentUser.setStudentId(studentId);
         studentUser.setName(name);
@@ -112,7 +112,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         studentUserRepository.save(studentUser);
     }
 
-    private void saveAdminUser(String employeeNumber, String name, String phoneNumber, String email, String password) {
+    private void saveAdminUser(Long employeeNumber, String name, String phoneNumber, String email, String password) {
         AdminUser adminUser = new AdminUser();
         adminUser.setEmployeeNumber(employeeNumber);
         adminUser.setName(name);
@@ -142,7 +142,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         inventoryItemRepository.save(inventoryItem);
     }
 
-    private void saveReport(Date creationDate, String description, String status, String studentId, String adminUserId) {
+    private void saveReport(Date creationDate, String description, String status, Long studentId, Long adminUserId) {
         Report report = new Report();
         report.setCreationDate(creationDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
         report.setDescription(description);

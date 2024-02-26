@@ -8,8 +8,11 @@ import java.util.List;
 public class StudentUser {
    
    @Id
-   @Column(name = "student_id", nullable = false, unique = true, length = 6)
-   private String studentId; // Matrícula
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   private Long id;
+
+   @Column(name = "student_id", nullable = false, unique = true)
+   private Long studentId;
 
    @Column(nullable = false)
    private String name;
@@ -27,11 +30,19 @@ public class StudentUser {
    private List<Report> reports;   
 
    // Getters y setters
-   public String getStudentId() {
+   public Long getId() {
+      return id;
+   }
+
+   public void setId(Long id) {
+      this.id = id;
+   }
+
+   public Long getStudentId() {
       return studentId;
    }
 
-   public void setStudentId(String studentId) {
+   public void setStudentId(Long studentId) {
       this.studentId = studentId;
    }
 

@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.briones.sicnabackend.models.StudentUser;
 
-public interface StudentUserRepository extends JpaRepository<StudentUser, String> {
-    Optional<StudentUser> findByStudentId(String studentId);
+public interface StudentUserRepository extends JpaRepository<StudentUser, Long> {
+    Optional<StudentUser> findByStudentId(Long studentId);
 }
