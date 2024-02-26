@@ -1,0 +1,65 @@
+ AdminUsers:
+{
+  "name": "Admin Name",
+  "employeeNumber": 299999999,
+  "phoneNumber": "1234567890",
+  "email": "admin@example.com",
+  "password": "password123"
+}
+
+StudentUser:
+{
+  "studentId": 299999,
+  "name": "Student Name",
+  "phoneNumber": "+1234567890",
+  "email": "student@example.com",
+  "password": "password123"
+}
+
+Areas:
+{
+  "name": "Area Name",
+  "description": "Area Description"
+}
+
+InventoryItems:
+{
+  "name": "Item Name",
+  "brand": "Item Brand",
+  "category": "Item Category",
+  "price": 99.99,
+  "description": "Item Description",
+  "imageFileName": "item_image.jpg",
+  "createdAt": "2024-02-26T00:00:00",
+  "area": {
+    "id": 1
+  }
+}
+
+Reports:
+{
+  "creationDate": "2024-02-25",
+  "description": "Report Description",
+  "status": "PENDING",
+  "student": {
+    "id": 1,
+    "name": "Student Name",
+    "phoneNumber": "+123456789",
+    "email": "student@example.com",
+    "password": "password123"
+  },
+  "adminUser": {
+    "id": 1,
+    "name": "Admin Name"
+  }
+}
+
+ReportInventoryItem:
+{
+  "report": {
+    "id": 1
+  },
+  "inventoryItem": {
+    "id": 1
+  }
+}
