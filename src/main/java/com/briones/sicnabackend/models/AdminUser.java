@@ -1,19 +1,19 @@
-package com.briones.sicnabackend.entity;
+package com.briones.sicnabackend.models;
 
 import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "student_users")
-public class StudentUser {
+@Table(name = "admin_users")
+public class AdminUser {
    
    @Id
-   @Column(name = "student_id", nullable = false, unique = true, length = 6)
-   private String studentId; // Matrícula
+   @Column(name = "employee_number", nullable = false, unique = true, length = 7)
+   private String employeeNumber; // Número de trabajador
 
    @Column(nullable = false)
    private String name;
-   
+
    @Column(name = "phone_number")
    private String phoneNumber;
    
@@ -23,16 +23,16 @@ public class StudentUser {
    @Column(nullable = false)
    private String password;
 
-   @OneToMany(mappedBy = "studentUser")
+   @OneToMany(mappedBy = "adminUser")
    private List<Report> reports;
 
    // Getters y setters
-   public String getStudentId() {
-      return studentId;
+   public String getEmployeeNumber() {
+      return employeeNumber;
    }
 
-   public void setStudentId(String studentId) {
-      this.studentId = studentId;
+   public void setEmployeeNumber(String employeeNumber) {
+      this.employeeNumber = employeeNumber;
    }
 
    public String getName() {
@@ -73,5 +73,5 @@ public class StudentUser {
 
    public void setReports(List<Report> reports) {
       this.reports = reports;
-   }
+   }   
 }

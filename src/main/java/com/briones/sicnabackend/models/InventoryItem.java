@@ -1,4 +1,4 @@
-package com.briones.sicnabackend.entity;
+package com.briones.sicnabackend.models;
 
 import jakarta.persistence.*;
 import java.util.Date;

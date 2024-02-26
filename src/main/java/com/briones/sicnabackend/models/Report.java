@@ -1,4 +1,4 @@
-package com.briones.sicnabackend.entity;
+package com.briones.sicnabackend.models;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
@@ -23,21 +23,27 @@ public class Report {
 
     @ManyToOne
     @JoinColumn(name = "student_id", nullable = false)
-    private StudentUser studentUser;
+    private StudentUser student;
 
     @ManyToOne
     @JoinColumn(name = "admin_user_id", nullable = false)
     private AdminUser adminUser;
-    
-    @ManyToMany
-    @JoinTable(
-        name = "report_inventory_items",
-        joinColumns = @JoinColumn(name = "report_id"),
-        inverseJoinColumns = @JoinColumn(name = "inventory_item_id")
-    )
-    private List<InventoryItem> inventoryItems;
 
-    // Getters y setters
+    @OneToMany(mappedBy = "report", cascade = CascadeType.ALL)
+    private List<ReportInventoryItem> reportInventoryItems;
+
+    // Constructor, getters y setters
+    public Report() {
+    }
+
+    public Report(LocalDate creationDate, String description, String status, StudentUser student, AdminUser adminUser) {
+        this.creationDate = creationDate;
+        this.description = description;
+        this.status = status;
+        this.student = student;
+        this.adminUser = adminUser;
+    }
+
     public Long getId() {
         return id;
     }
@@ -70,19 +76,27 @@ public class Report {
         this.status = status;
     }
 
-    public StudentUser getStudentUser() {
-        return studentUser;
+    public StudentUser getStudent() {
+        return student;
     }
 
-    public void setStudentUser(StudentUser studentUser) {
-        this.studentUser = studentUser;
+    public void setStudent(StudentUser student) {
+        this.student = student;
     }
 
-    public List<InventoryItem> getInventoryItems() {
-        return inventoryItems;
+    public AdminUser getAdminUser() {
+        return adminUser;
     }
 
-    public void setInventoryItems(List<InventoryItem> inventoryItems) {
-        this.inventoryItems = inventoryItems;
+    public void setAdminUser(AdminUser adminUser) {
+        this.adminUser = adminUser;
+    }
+
+    public List<ReportInventoryItem> getReportInventoryItems() {
+        return reportInventoryItems;
+    }
+
+    public void setReportInventoryItems(List<ReportInventoryItem> reportInventoryItems) {
+        this.reportInventoryItems = reportInventoryItems;
     }
 }
