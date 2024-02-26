@@ -52,9 +52,9 @@ Dependencias: Indica si el requerimiento tiene alguna dependencia de otros reque
 
 ## Matriz de Rastreabilidad
 
-ID del Requerimiento: Lista los identificadores de los requerimientos funcionales.
-Módulos o Componentes: Asocia cada requerimiento con los módulos o componentes específicos de la aplicación relacionados con su implementación.
-Casos de Uso: Identifica los casos de uso que están relacionados con cada requerimiento funcional.
+- ID del Requerimiento: Lista los identificadores de los requerimientos funcionales.
+- Módulos o Componentes: Asocia cada requerimiento con los módulos o componentes específicos de la aplicación relacionados con su implementación.
+- Casos de Uso: Identifica los casos de uso que están relacionados con cada requerimiento funcional.
 
 ## Tecnologías
 
