@@ -1,12 +1,12 @@
-package com.briones.exceptions.area;
+package com.briones.sicnabackend.exceptions.report;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class AreaNotFoundException extends RuntimeException {
+public class ReportNotFoundException extends RuntimeException {
 
-    public AreaNotFoundException(String message) {
+    public ReportNotFoundException(String message) {
         super(message);
     }
 }

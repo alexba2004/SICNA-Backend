@@ -1,13 +1,11 @@
-package com.briones.exceptions.report;
+package com.briones.sicnabackend.exceptions.adminuser;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.CONFLICT)
-public class ReportConflictException extends RuntimeException {
-
-    public ReportConflictException(String message) {
+public class AdminUserConflictException extends RuntimeException {
+    public AdminUserConflictException(String message) {
         super(message);
     }
 }
-

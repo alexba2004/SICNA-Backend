@@ -1,12 +1,12 @@
-package com.briones.exceptions.report;
+package com.briones.sicnabackend.exceptions.area;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class ReportBadRequestException extends RuntimeException {
+public class AreaBadRequestException extends RuntimeException {
 
-    public ReportBadRequestException(String message) {
+    public AreaBadRequestException(String message) {
         super(message);
     }
 }

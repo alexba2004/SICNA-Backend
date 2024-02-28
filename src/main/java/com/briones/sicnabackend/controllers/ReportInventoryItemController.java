@@ -1,6 +1,6 @@
 package com.briones.sicnabackend.controllers;
 
-import com.briones.exceptions.reportinventoryitem.*;
+import com.briones.sicnabackend.exceptions.reportinventoryitem.*;
 import com.briones.sicnabackend.models.ReportInventoryItem;
 import com.briones.sicnabackend.repositories.ReportInventoryItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;

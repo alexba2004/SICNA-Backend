@@ -1,12 +1,13 @@
-package com.briones.exceptions.area;
+package com.briones.sicnabackend.exceptions.report;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.CONFLICT)
-public class AreaConflictException extends RuntimeException {
+public class ReportConflictException extends RuntimeException {
 
-    public AreaConflictException(String message) {
+    public ReportConflictException(String message) {
         super(message);
     }
 }
+

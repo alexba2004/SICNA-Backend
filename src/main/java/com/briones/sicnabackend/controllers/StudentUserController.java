@@ -1,6 +1,6 @@
 package com.briones.sicnabackend.controllers;
 
-import com.briones.exceptions.studentuser.*;
+import com.briones.sicnabackend.exceptions.studentuser.*;
 import com.briones.sicnabackend.models.StudentUser;
 import com.briones.sicnabackend.repositories.StudentUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

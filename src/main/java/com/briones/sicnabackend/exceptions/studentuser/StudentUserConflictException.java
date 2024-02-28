@@ -1,4 +1,4 @@
-package com.briones.exceptions.studentuser;
+package com.briones.sicnabackend.exceptions.studentuser;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

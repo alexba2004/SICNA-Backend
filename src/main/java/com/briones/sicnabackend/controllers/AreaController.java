@@ -1,6 +1,6 @@
 package com.briones.sicnabackend.controllers;
 
-import com.briones.exceptions.area.*;
+import com.briones.sicnabackend.exceptions.area.*;
 import com.briones.sicnabackend.models.Area;
 import com.briones.sicnabackend.repositories.AreaRepository;
 import org.springframework.beans.factory.annotation.Autowired;

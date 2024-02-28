@@ -1,6 +1,6 @@
 package com.briones.sicnabackend.controllers;
 
-import com.briones.exceptions.report.*;
+import com.briones.sicnabackend.exceptions.report.*;
 import com.briones.sicnabackend.models.Report;
 import com.briones.sicnabackend.repositories.ReportRepository;
 import org.springframework.beans.factory.annotation.Autowired;

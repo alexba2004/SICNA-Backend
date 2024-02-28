@@ -1,4 +1,4 @@
-package com.briones.exceptions.reportinventoryitem;
+package com.briones.sicnabackend.exceptions.reportinventoryitem;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

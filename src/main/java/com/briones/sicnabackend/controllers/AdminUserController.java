@@ -1,6 +1,6 @@
 package com.briones.sicnabackend.controllers;
 
-import com.briones.exceptions.adminuser.*;
+import com.briones.sicnabackend.exceptions.adminuser.*;
 import com.briones.sicnabackend.models.AdminUser;
 import com.briones.sicnabackend.repositories.AdminUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
