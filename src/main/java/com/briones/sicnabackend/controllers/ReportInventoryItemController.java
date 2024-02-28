@@ -1,5 +1,6 @@
 package com.briones.sicnabackend.controllers;
 
+import com.briones.exceptions.reportinventoryitem.*;
 import com.briones.sicnabackend.models.ReportInventoryItem;
 import com.briones.sicnabackend.repositories.ReportInventoryItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,44 +29,46 @@ public class ReportInventoryItemController {
 
     @PostMapping
     public ResponseEntity<ReportInventoryItem> createReportInventoryItem(@RequestBody ReportInventoryItem reportInventoryItem) {
-        ReportInventoryItem createdReportInventoryItem = reportInventoryItemRepository.save(reportInventoryItem);
-        return new ResponseEntity<>(createdReportInventoryItem, HttpStatus.CREATED);
+        try {
+            ReportInventoryItem createdReportInventoryItem = reportInventoryItemRepository.save(reportInventoryItem);
+            return new ResponseEntity<>(createdReportInventoryItem, HttpStatus.CREATED);
+        } catch (Exception ex) {
+            throw new ReportInventoryItemBadRequestException("Error al crear el elemento de inventario de informe.");
+        }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ReportInventoryItem> getReportInventoryItemById(@PathVariable("id") Long id) {
         ReportInventoryItem reportInventoryItem = reportInventoryItemRepository.findById(id)
-                .orElse(null);
-        if (reportInventoryItem != null) {
-            return new ResponseEntity<>(reportInventoryItem, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+                .orElseThrow(() -> new ReportInventoryItemNotFoundException("Elemento de inventario de informe no encontrado."));
+        return new ResponseEntity<>(reportInventoryItem, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ReportInventoryItem> updateReportInventoryItem(
             @PathVariable("id") Long id, @RequestBody ReportInventoryItem reportInventoryItem) {
-        ReportInventoryItem existingReportInventoryItem = reportInventoryItemRepository.findById(id)
-                .orElse(null);
-        if (existingReportInventoryItem != null) {
-            reportInventoryItem.setId(id);
+        if (!reportInventoryItemRepository.existsById(id)) {
+            throw new ReportInventoryItemNotFoundException("Elemento de inventario de informe no encontrado.");
+        }
+        reportInventoryItem.setId(id);
+        try {
             ReportInventoryItem updatedReportInventoryItem = reportInventoryItemRepository.save(reportInventoryItem);
             return new ResponseEntity<>(updatedReportInventoryItem, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception ex) {
+            throw new ReportInventoryItemConflictException("Error al actualizar el elemento de inventario de informe.");
         }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteReportInventoryItem(@PathVariable("id") Long id) {
-        ReportInventoryItem reportInventoryItem = reportInventoryItemRepository.findById(id)
-                .orElse(null);
-        if (reportInventoryItem != null) {
+        if (!reportInventoryItemRepository.existsById(id)) {
+            throw new ReportInventoryItemNotFoundException("Elemento de inventario de informe no encontrado.");
+        }
+        try {
             reportInventoryItemRepository.deleteById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception ex) {
+            throw new ReportInventoryItemConflictException("Error al eliminar el elemento de inventario de informe.");
         }
     }
 }
