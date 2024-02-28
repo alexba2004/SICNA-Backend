@@ -1,5 +1,6 @@
 package com.briones.sicnabackend.controllers;
 
+import com.briones.exceptions.inventoryitem.*;
 import com.briones.sicnabackend.models.InventoryItem;
 import com.briones.sicnabackend.repositories.InventoryItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +27,14 @@ public class InventoryItemController {
     @GetMapping("/{itemId}")
     public ResponseEntity<InventoryItem> getInventoryItemById(@PathVariable Long itemId) {
         Optional<InventoryItem> inventoryItemOptional = inventoryItemRepository.findById(itemId);
-        return inventoryItemOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return inventoryItemOptional.map(ResponseEntity::ok).orElseThrow(() -> new InventoryItemNotFoundException("Inventory item not found with ID: " + itemId));
     }
 
     @PostMapping
     public ResponseEntity<InventoryItem> createInventoryItem(@RequestBody InventoryItem inventoryItem) {
+        if (inventoryItem.getId() != null) {
+            throw new InventoryItemBadRequestException("Inventory item ID must be null for creation.");
+        }
         InventoryItem createdInventoryItem = inventoryItemRepository.save(inventoryItem);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdInventoryItem);
     }
@@ -39,11 +43,13 @@ public class InventoryItemController {
     public ResponseEntity<InventoryItem> updateInventoryItem(@PathVariable Long itemId, @RequestBody InventoryItem updatedInventoryItem) {
         Optional<InventoryItem> inventoryItemOptional = inventoryItemRepository.findById(itemId);
         if (inventoryItemOptional.isPresent()) {
-            updatedInventoryItem.setId(inventoryItemOptional.get().getId());
+            if (!itemId.equals(updatedInventoryItem.getId())) {
+                throw new InventoryItemBadRequestException("Inventory item ID in path must match ID in request body.");
+            }
             InventoryItem savedInventoryItem = inventoryItemRepository.save(updatedInventoryItem);
             return ResponseEntity.ok(savedInventoryItem);
         } else {
-            return ResponseEntity.notFound().build();
+            throw new InventoryItemNotFoundException("Inventory item not found with ID: " + itemId);
         }
     }
 
@@ -54,7 +60,7 @@ public class InventoryItemController {
             inventoryItemRepository.delete(inventoryItemOptional.get());
             return ResponseEntity.noContent().build();
         } else {
-            return ResponseEntity.notFound().build();
+            throw new InventoryItemNotFoundException("Inventory item not found with ID: " + itemId);
         }
     }
 }
