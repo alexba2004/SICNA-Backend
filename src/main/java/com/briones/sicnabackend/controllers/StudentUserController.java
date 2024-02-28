@@ -1,6 +1,6 @@
 package com.briones.sicnabackend.controllers;
 
-import com.briones.sicnabackend.models.AdminUser;
+import com.briones.exceptions.studentuser.*;
 import com.briones.sicnabackend.models.StudentUser;
 import com.briones.sicnabackend.repositories.StudentUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +27,17 @@ public class StudentUserController {
     @GetMapping("/{studentId}")
     public ResponseEntity<StudentUser> getStudentByStudentId(@PathVariable Long studentId) {
         Optional<StudentUser> studentOptional = studentUserRepository.findByStudentId(studentId);
-        return studentOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return studentOptional.map(ResponseEntity::ok).orElseThrow(() ->
+                new StudentUserNotFoundException("Student with ID " + studentId + " not found"));
     }
 
     @PostMapping
-    public StudentUser createAdminUser(@RequestBody StudentUser studentId) {
-        return studentUserRepository.save(studentId);
+    public ResponseEntity<StudentUser> createAdminUser(@RequestBody StudentUser student) {
+        if (student.getId() != null) {
+            throw new StudentUserConflictException("Cannot create student with predefined ID");
+        }
+        StudentUser createdStudent = studentUserRepository.save(student);
+        return new ResponseEntity<>(createdStudent, HttpStatus.CREATED);
     }
     
 
@@ -40,11 +45,13 @@ public class StudentUserController {
     public ResponseEntity<StudentUser> updateStudent(@PathVariable Long studentId, @RequestBody StudentUser updatedStudent) {
         Optional<StudentUser> studentOptional = studentUserRepository.findByStudentId(studentId);
         if (studentOptional.isPresent()) {
-            updatedStudent.setId(studentOptional.get().getId());
+            if (!studentId.equals(updatedStudent.getId())) {
+                throw new StudentUserBadRequestException("Student ID in path and body must match");
+            }
             StudentUser savedStudent = studentUserRepository.save(updatedStudent);
             return ResponseEntity.ok(savedStudent);
         } else {
-            return ResponseEntity.notFound().build();
+            throw new StudentUserNotFoundException("Student with ID " + studentId + " not found");
         }
     }
 
@@ -55,7 +62,7 @@ public class StudentUserController {
             studentUserRepository.delete(studentUserOptional.get());
             return ResponseEntity.noContent().build();
         } else {
-            return ResponseEntity.notFound().build();
+            throw new StudentUserNotFoundException("Student with ID " + studentId + " not found");
         }
     }
 }
