@@ -1,5 +1,6 @@
 package com.briones.sicnabackend.controllers;
 
+import com.briones.exceptions.report.*;
 import com.briones.sicnabackend.models.Report;
 import com.briones.sicnabackend.repositories.ReportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +27,14 @@ public class ReportController {
     @GetMapping("/{id}")
     public ResponseEntity<Report> getReportById(@PathVariable Long id) {
         Optional<Report> reportOptional = reportRepository.findById(id);
-        return reportOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return reportOptional.map(ResponseEntity::ok).orElseThrow(() -> new ReportNotFoundException("Report not found with id: " + id));
     }
 
     @PostMapping
     public ResponseEntity<Report> createReport(@RequestBody Report report) {
+        if (report.getId() != null) {
+            throw new ReportBadRequestException("Report id must be null for creation");
+        }
         Report createdReport = reportRepository.save(report);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdReport);
     }
@@ -39,11 +43,11 @@ public class ReportController {
     public ResponseEntity<Report> updateReport(@PathVariable Long id, @RequestBody Report updatedReport) {
         Optional<Report> reportOptional = reportRepository.findById(id);
         if (reportOptional.isPresent()) {
-            updatedReport.setId(reportOptional.get().getId());
+            updatedReport.setId(id);
             Report savedReport = reportRepository.save(updatedReport);
             return ResponseEntity.ok(savedReport);
         } else {
-            return ResponseEntity.notFound().build();
+            throw new ReportNotFoundException("Report not found with id: " + id);
         }
     }
 
@@ -54,7 +58,7 @@ public class ReportController {
             reportRepository.delete(reportOptional.get());
             return ResponseEntity.noContent().build();
         } else {
-            return ResponseEntity.notFound().build();
+            throw new ReportNotFoundException("Report not found with id: " + id);
         }
     }
 }
