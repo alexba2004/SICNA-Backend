@@ -1,5 +1,6 @@
 package com.briones.sicnabackend.controllers;
 
+import com.briones.exceptions.adminuser.*;
 import com.briones.sicnabackend.models.AdminUser;
 import com.briones.sicnabackend.repositories.AdminUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class AdminUserController {
     @GetMapping("/{employeeNumber}")
     public ResponseEntity<AdminUser> getAdminUserByEmployeeNumber(@PathVariable Long employeeNumber) {
         Optional<AdminUser> adminUserOptional = adminUserRepository.findByEmployeeNumber(employeeNumber);
-        return adminUserOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return adminUserOptional.map(ResponseEntity::ok).orElseThrow(() -> new AdminUserNotFoundException("Admin user not found with employee number: " + employeeNumber));
     }
 
     @PostMapping
@@ -43,7 +44,7 @@ public class AdminUserController {
             adminUser.setPassword(adminUserDetails.getPassword());
             return ResponseEntity.ok(adminUserRepository.save(adminUser));
         } else {
-            return ResponseEntity.notFound().build();
+            throw new AdminUserNotFoundException("Admin user not found with employee number: " + employeeNumber);
         }
     }
 
@@ -54,7 +55,7 @@ public class AdminUserController {
             adminUserRepository.delete(adminUserOptional.get());
             return ResponseEntity.noContent().build();
         } else {
-            return ResponseEntity.notFound().build();
+            throw new AdminUserNotFoundException("Admin user not found with employee number: " + employeeNumber);
         }
     }
 }
