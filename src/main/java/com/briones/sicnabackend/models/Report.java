@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "reports")
 public class Report {
@@ -23,13 +25,16 @@ public class Report {
 
     @ManyToOne
     @JoinColumn(name = "student_id", nullable = false)
+    @JsonBackReference
     private StudentUser student;
 
     @ManyToOne
     @JoinColumn(name = "admin_user_id", nullable = false)
+    @JsonBackReference
     private AdminUser adminUser;
 
     @OneToMany(mappedBy = "report", cascade = CascadeType.ALL)
+    @JsonBackReference
     private List<ReportInventoryItem> reportInventoryItems;
 
     // Constructor, getters y setters
