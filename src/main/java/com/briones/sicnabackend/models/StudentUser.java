@@ -26,7 +26,7 @@ public class StudentUser {
    @Column(nullable = false)
    private String password;
 
-   @OneToMany(mappedBy = "student")
+   @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
    private List<Report> reports;   
 
    // Getters y setters

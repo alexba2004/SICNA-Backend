@@ -32,15 +32,15 @@ public class StudentUserController {
     }
 
     @PostMapping
-    public ResponseEntity<StudentUser> createAdminUser(@RequestBody StudentUser student) {
-        if (student.getId() != null) {
-            throw new StudentUserConflictException("Cannot create student with predefined ID");
+    public ResponseEntity<String> createStudent(@RequestBody StudentUser studentUser) {
+        try {
+            studentUserRepository.save(studentUser);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Student created successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to create student.");
         }
-        StudentUser createdStudent = studentUserRepository.save(student);
-        return new ResponseEntity<>(createdStudent, HttpStatus.CREATED);
     }
     
-
     @PutMapping("/{studentId}")
     public ResponseEntity<StudentUser> updateStudent(@PathVariable Long studentId, @RequestBody StudentUser updatedStudent) {
         Optional<StudentUser> studentOptional = studentUserRepository.findByStudentId(studentId);
