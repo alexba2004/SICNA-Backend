@@ -88,4 +88,9 @@ public class Department {
     public void setModificationDate(Date modificationDate) {
         this.modificationDate = modificationDate;
     }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.modificationDate = new Date();
+    }
 }
