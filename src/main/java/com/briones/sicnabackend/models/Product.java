@@ -32,10 +32,12 @@ public class Product {
     @JoinColumn(name = "pertenencia_id", nullable = false)
     private Space space;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date registrationDate;
 
     @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date modificationDate;
 
     // Getters and setters

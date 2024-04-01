@@ -10,7 +10,8 @@ public class Report {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date loanDate;
 
     @Column(nullable = false)
@@ -32,6 +33,7 @@ public class Report {
     private Person borrower;
 
     @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date modificationDate;
 
     // Getters and setters

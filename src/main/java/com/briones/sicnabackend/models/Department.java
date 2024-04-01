@@ -24,10 +24,12 @@ public class Department {
     @JoinColumn(name = "encargado_id", nullable = false)
     private Person responsiblePerson;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date registrationDate;
 
     @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date modificationDate;
 
     // Getters and setters

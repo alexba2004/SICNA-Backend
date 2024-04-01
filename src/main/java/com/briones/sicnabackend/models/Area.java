@@ -16,10 +16,12 @@ public class Area {
     @Column
     private String description;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date registrationDate;
 
     @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date modificationDate;
 
     // Getters and setters
