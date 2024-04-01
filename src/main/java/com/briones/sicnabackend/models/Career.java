@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name = "tbb_careers")
 public class Career {
 
     @Id
@@ -76,7 +77,7 @@ public class Career {
     public void setModificationDate(Date modificationDate) {
         this.modificationDate = modificationDate;
     }
-    
+
     @PreUpdate
     protected void onUpdate() {
         this.modificationDate = new Date();
