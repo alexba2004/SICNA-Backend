@@ -33,7 +33,7 @@ public class Report {
     @JoinColumn(name = "prestatario_id", nullable = false)
     private Person borrower;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modificationDate;
 

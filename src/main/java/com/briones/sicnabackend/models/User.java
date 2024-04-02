@@ -21,7 +21,7 @@ public class User {
     @JoinColumn(name = "persona_id", unique = true, nullable = false)
     private Person person;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT true")
     private String status;
 
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")

@@ -21,7 +21,7 @@ public class Area {
     @Temporal(TemporalType.TIMESTAMP)
     private Date registrationDate;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modificationDate;
 
