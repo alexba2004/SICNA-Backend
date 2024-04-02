@@ -1,6 +1,6 @@
 package com.briones.sicnabackend.models;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
