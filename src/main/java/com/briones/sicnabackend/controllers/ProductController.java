@@ -2,12 +2,16 @@ package com.briones.sicnabackend.controllers;
 
 import com.briones.sicnabackend.exceptions.ErrorResponse;
 import com.briones.sicnabackend.models.Product;
+import com.briones.sicnabackend.models.Space;
 import com.briones.sicnabackend.repositories.ProductRepository;
+import com.briones.sicnabackend.repositories.SpaceRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +23,9 @@ public class ProductController {
 
     @Autowired
     private ProductRepository productRepository;
-
+    
+    @Autowired
+    private SpaceRepository spaceRepository;
     // Obtener todos los productos
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
@@ -40,14 +46,23 @@ public class ProductController {
 
     // Crear un nuevo producto
     @PostMapping
-    public ResponseEntity<?> createProduct(@RequestBody Product product) {
-        try {
-            Product createdProduct = productRepository.save(product);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdProduct);
-        } catch (Exception e) {
-            ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error al crear el producto");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+        // Verificar si el espacio asociado al producto ya está administrado
+        Space space = product.getSpace();
+        if (space != null && space.getId() != null) {
+            space = spaceRepository.findById(space.getId()).orElse(null);
         }
+        // Establecer el espacio en el producto
+        product.setSpace(space);
+
+        // Establecer fechas de registro y modificación
+        Date currentDate = new Date();
+        product.setRegistrationDate(currentDate);
+        product.setModificationDate(currentDate);
+
+        // Guardar el producto
+        Product createdProduct = productRepository.save(product);
+        return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
     }
 
     // Actualizar un producto existente
