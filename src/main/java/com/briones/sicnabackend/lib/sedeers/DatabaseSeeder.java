@@ -105,7 +105,7 @@ public class DatabaseSeeder implements CommandLineRunner {
             Optional<Person> optionalPerson = personRepository.findByFirstName("Joan");
             if (optionalPerson.isPresent()) {
                 Person person = optionalPerson.get();
-                saveUser("admin", "$2y$12$KgI/VRJmVxjLh25KcAT3TuPpPKu/BPV83hBBYOyNDS1I3AefyK4ai", true, person);
+                saveUser("admin", "12345", true, person);
             }
         }
     }
