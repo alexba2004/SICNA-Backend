@@ -1,6 +1,6 @@
 package com.briones.sicnabackend.controllers;
 
-import com.briones.sicnabackend.exceptions.career.CareerNotFoundException;
+import com.briones.sicnabackend.exceptions.ErrorResponse;
 import com.briones.sicnabackend.models.Career;
 import com.briones.sicnabackend.repositories.CareerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -18,49 +20,74 @@ public class CareerController {
     @Autowired
     private CareerRepository careerRepository;
 
-    // Get all careers
+    // Obtener todas las carreras
     @GetMapping
     public ResponseEntity<List<Career>> getAllCareers() {
         List<Career> careers = careerRepository.findAll();
         return ResponseEntity.ok(careers);
     }
 
-    // Get career by id
+    // Obtener una carrera por su ID
     @GetMapping("/{id}")
-    public ResponseEntity<Career> getCareerById(@PathVariable Long id) {
+    public ResponseEntity<?> getCareerById(@PathVariable Long id) {
         Optional<Career> careerOptional = careerRepository.findById(id);
-        return careerOptional.map(ResponseEntity::ok)
-                .orElseThrow(() -> new CareerNotFoundException("Career not found with id: " + id));
-    }
-
-    // Create a new career
-    @PostMapping
-    public ResponseEntity<Career> createCareer(@RequestBody Career career) {
-        Career createdCareer = careerRepository.save(career);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdCareer);
-    }
-
-    // Update an existing career
-    @PutMapping("/{id}")
-    public ResponseEntity<Career> updateCareer(@PathVariable Long id, @RequestBody Career careerDetails) {
-        Optional<Career> careerOptional = careerRepository.findById(id);
-        return careerOptional.map(existingCareer -> {
-            existingCareer.setName(careerDetails.getName());
-            existingCareer.setDescription(careerDetails.getDescription());
-            existingCareer.setArea(careerDetails.getArea());
-            Career updatedCareer = careerRepository.save(existingCareer);
-            return ResponseEntity.ok(updatedCareer);
-        }).orElseThrow(() -> new CareerNotFoundException("Career not found with id: " + id));
-    }
-
-    // Delete a career
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCareer(@PathVariable Long id) {
-        if (careerRepository.existsById(id)) {
-            careerRepository.deleteById(id);
-            return ResponseEntity.noContent().build();
+        if (careerOptional.isPresent()) {
+            return ResponseEntity.ok(careerOptional.get());
         } else {
-            throw new CareerNotFoundException("Career not found with id: " + id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(HttpStatus.NOT_FOUND.value(), "Carrera no encontrada"));
+        }
+    }
+
+    // Crear una nueva carrera
+    @PostMapping
+    public ResponseEntity<?> createCareer(@RequestBody Career career) {
+        try {
+            Career savedCareer = careerRepository.save(career);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedCareer);
+        } catch (Exception e) {
+            ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error al crear la carrera");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+    }
+
+    // Actualizar una carrera existente
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateCareer(@PathVariable Long id, @RequestBody Career updatedCareer) {
+        try {
+            Optional<Career> careerOptional = careerRepository.findById(id);
+            if (careerOptional.isPresent()) {
+                Career existingCareer = careerOptional.get();
+                existingCareer.setName(updatedCareer.getName());
+                existingCareer.setDescription(updatedCareer.getDescription());
+                Career savedCareer = careerRepository.save(existingCareer);
+                return ResponseEntity.ok(savedCareer);
+            } else {
+                ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND.value(), "Carrera no encontrada");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+            }
+        } catch (Exception e) {
+            ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error al actualizar la carrera");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+    }
+
+    // Eliminar una carrera por su ID
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteCareer(@PathVariable Long id) {
+        try {
+            if (careerRepository.existsById(id)) {
+                careerRepository.deleteById(id);
+                Map<String, Object> response = new HashMap<>();
+                response.put("status", HttpStatus.OK.value());
+                response.put("message", "Carrera eliminada exitosamente");
+                return ResponseEntity.ok(response);
+            } else {
+                ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND.value(), "Carrera no encontrada");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+            }
+        } catch (Exception e) {
+            ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error al eliminar la carrera");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
 }
