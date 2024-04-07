@@ -75,7 +75,44 @@
 ## GET (ALL): http://localhost:8080/api/users
 ## GET (ONE): http://localhost:8080/api/users/{id}
 ## POST: http://localhost:8080/api/users
+{
+  "userType": "admin",
+  "password": "password123",
+  "person": {
+    "id": 2
+  },
+  "status": true
+}
 ## PUT: http://localhost:8080/api/users/{id}
+{
+  "id": 4,
+  "userType": "admin",
+  "password": "password123",
+  "person": {
+    "id": 3,
+    "firstName": "Jose Alejandro",
+    "lastName": "Briones",
+    "middleName": "Arroyo",
+    "birthDate": "2004-10-22T05:00:00.000+00:00",
+    "email": "briones@gmail.com",
+    "phone": "775 127 2647",
+    "registrationNumber": "220103",
+    "personType": "Estudiante",
+    "area": {
+      "id": 1,
+      "name": "Tecnologías de la Información",
+      "description": "Área especializada en el desarrollo de software",
+      "registrationDate": "2024-04-07T10:17:26.000+00:00",
+      "modificationDate": "2024-04-07T10:17:26.000+00:00"
+    },
+    "career": null,
+    "registrationDate": "2024-04-07T10:17:26.000+00:00",
+    "modificationDate": "2024-04-07T10:17:26.000+00:00"
+  },
+  "status": true,
+  "registrationDate": "2024-04-07T11:43:33.000+00:00",
+  "modificationDate": "2024-04-07T11:43:33.000+00:00"
+}
 ## DELETE: http://localhost:8080/api/users/{id}
 
 ## =====DEPARTMENTS===== ##

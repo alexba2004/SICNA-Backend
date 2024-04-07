@@ -1,13 +1,20 @@
 package com.briones.sicnabackend.controllers;
 
 import com.briones.sicnabackend.exceptions.ErrorResponse;
+import com.briones.sicnabackend.models.Area;
+import com.briones.sicnabackend.models.Career;
+import com.briones.sicnabackend.models.Person;
 import com.briones.sicnabackend.models.User;
+import com.briones.sicnabackend.repositories.AreaRepository;
+import com.briones.sicnabackend.repositories.CareerRepository;
+import com.briones.sicnabackend.repositories.PersonRepository;
 import com.briones.sicnabackend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +26,15 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private AreaRepository areaRepository;
+
+    @Autowired
+    private CareerRepository careerRepository;
+
+    @Autowired
+    private PersonRepository personRepository;
 
     // Obtener todos los usuarios
     @GetMapping
@@ -40,14 +56,23 @@ public class UserController {
 
     // Crear un nuevo usuario
     @PostMapping
-    public ResponseEntity<?> createUser(@RequestBody User user) {
-        try {
-            User createdUser = userRepository.save(user);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
-        } catch (Exception e) {
-            ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error al crear el usuario");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        // Verificar si la persona asociada al usuario ya está administrada
+        Person person = user.getPerson();
+        if (person != null && person.getId() != null) {
+            person = personRepository.findById(person.getId()).orElse(null);
         }
+        // Establecer la persona en el usuario
+        user.setPerson(person);
+
+        // Establecer fechas de registro y modificación
+        Date currentDate = new Date();
+        user.setRegistrationDate(currentDate);
+        user.setModificationDate(currentDate);
+
+        // Guardar el usuario
+        User createdUser = userRepository.save(user);
+        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
     // Actualizar un usuario existente
