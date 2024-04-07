@@ -22,13 +22,13 @@ public class User {
     private Person person;
 
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT true")
-    private String status;
+    private Boolean status;
 
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     @Temporal(TemporalType.TIMESTAMP)
     private Date registrationDate;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modificationDate;
 
@@ -65,11 +65,11 @@ public class User {
         this.person = person;
     }
 
-    public String getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 
@@ -94,4 +94,3 @@ public class User {
         this.modificationDate = new Date();
     }
 }
-

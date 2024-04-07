@@ -1,10 +1,9 @@
 package com.briones.sicnabackend.repositories;
 
-import com.briones.sicnabackend.models.Person;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import com.briones.sicnabackend.models.Person;
 
-@Repository
 public interface PersonRepository extends JpaRepository<Person, Long> {
+    Optional<Person> findByFirstName(String firstName);
 }
-

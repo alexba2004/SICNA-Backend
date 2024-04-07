@@ -1,10 +1,9 @@
 package com.briones.sicnabackend.repositories;
 
-import com.briones.sicnabackend.models.Space;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import com.briones.sicnabackend.models.Space;
 
-@Repository
 public interface SpaceRepository extends JpaRepository<Space, Long> {
+    Optional<Space> findByName(String name);
 }
-

@@ -83,4 +83,3 @@ public class Career {
         this.modificationDate = new Date();
     }
 }
-

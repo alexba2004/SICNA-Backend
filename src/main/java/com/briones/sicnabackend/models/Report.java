@@ -107,4 +107,3 @@ public class Report {
         this.modificationDate = new Date();
     }
 }
-
