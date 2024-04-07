@@ -332,5 +332,141 @@
 ## GET (ALL): http://localhost:8080/api/reports
 ## GET (ONE): http://localhost:8080/api/reports/{id}
 ## POST: http://localhost:8080/api/reports
+{
+  "loanDate": "2024-04-07T12:00:00",
+  "returnDateLimit": "2024-04-14T12:00:00",
+  "status": "Prestado",
+  "borrowedProduct": {
+    "id": 1
+  },
+  "lender": {
+    "id": 1
+  },
+  "borrower": {
+    "id": 2
+  }
+}
 ## PUT: http://localhost:8080/api/reports/{id}
+{
+  "loanDate": "2024-04-07T12:00:00.000+00:00",
+  "returnDateLimit": "2024-04-14T12:00:00.000+00:00",
+  "status": "Prestado",
+  "borrowedProduct": {
+    "id": 2,
+    "name": "Monitor",
+    "brand": "Samsung",
+    "price": 300.0,
+    "category": "Electrónica",
+    "description": "Monitor de 24 pulgadas",
+    "image": "monitor.jpg",
+    "space": {
+      "id": 2,
+      "name": "Laboratorio 1",
+      "description": "Laboratorio de Cómputo 1",
+      "department": {
+        "id": 2,
+        "name": "TI Docencia 1",
+        "description": "Departamento de TI",
+        "area": {
+          "id": 2,
+          "name": "Tecnologías de la Información",
+          "description": "Área especializada en el desarrollo de software",
+          "registrationDate": "2024-04-07T10:17:26.000+00:00",
+          "modificationDate": "2024-04-07T10:17:26.000+00:00"
+        },
+        "responsiblePerson": {
+          "id": 1,
+          "firstName": "Joan",
+          "lastName": "Salas",
+          "middleName": "Vera",
+          "birthDate": "1991-03-13T06:00:00.000+00:00",
+          "email": "joan@gmail.com",
+          "phone": "764 111 4132",
+          "registrationNumber": "2201337",
+          "personType": "Docente",
+          "area": {
+            "id": 1,
+            "name": "Tecnologías de la Información",
+            "description": "Área especializada en el desarrollo de software",
+            "registrationDate": "2024-04-07T10:17:26.000+00:00",
+            "modificationDate": "2024-04-07T10:17:26.000+00:00"
+          },
+          "career": null,
+          "registrationDate": "2024-04-07T10:17:26.000+00:00",
+          "modificationDate": "2024-04-07T10:17:26.000+00:00"
+        },
+        "registrationDate": "2024-04-07T10:17:26.000+00:00",
+        "modificationDate": "2024-04-07T10:17:26.000+00:00"
+      },
+      "responsiblePerson": {
+        "id": 1,
+        "firstName": "Joan",
+        "lastName": "Salas",
+        "middleName": "Vera",
+        "birthDate": "1991-03-13T06:00:00.000+00:00",
+        "email": "joan@gmail.com",
+        "phone": "764 111 4132",
+        "registrationNumber": "2201337",
+        "personType": "Docente",
+        "area": {
+          "id": 1,
+          "name": "Tecnologías de la Información",
+          "description": "Área especializada en el desarrollo de software",
+          "registrationDate": "2024-04-07T10:17:26.000+00:00",
+          "modificationDate": "2024-04-07T10:17:26.000+00:00"
+        },
+        "career": null,
+        "registrationDate": "2024-04-07T10:17:26.000+00:00",
+        "modificationDate": "2024-04-07T10:17:26.000+00:00"
+      },
+      "registrationDate": "2024-04-07T10:17:26.000+00:00",
+      "modificationDate": "2024-04-07T10:17:26.000+00:00"
+    },
+    "registrationDate": "2024-04-07T10:17:26.000+00:00",
+    "modificationDate": "2024-04-07T10:17:26.000+00:00"
+  },
+  "lender": {
+    "id": 1,
+    "firstName": "Joan",
+    "lastName": "Salas",
+    "middleName": "Vera",
+    "birthDate": "1991-03-13T06:00:00.000+00:00",
+    "email": "joan@gmail.com",
+    "phone": "764 111 4132",
+    "registrationNumber": "2201337",
+    "personType": "Docente",
+    "area": {
+      "id": 1,
+      "name": "Tecnologías de la Información",
+      "description": "Área especializada en el desarrollo de software",
+      "registrationDate": "2024-04-07T10:17:26.000+00:00",
+      "modificationDate": "2024-04-07T10:17:26.000+00:00"
+    },
+    "career": null,
+    "registrationDate": "2024-04-07T10:17:26.000+00:00",
+    "modificationDate": "2024-04-07T10:17:26.000+00:00"
+  },
+  "borrower": {
+    "id": 2,
+    "firstName": "Joan",
+    "lastName": "Salas",
+    "middleName": "Vera",
+    "birthDate": "1991-03-13T06:00:00.000+00:00",
+    "email": "josssand@gmail.com",
+    "phone": "764 111 4132",
+    "registrationNumber": "2201337",
+    "personType": "Docente",
+    "area": {
+      "id": 36,
+      "name": "Tecnologías de la Información",
+      "description": "Área especializada en el desarrollo de software",
+      "registrationDate": "2024-04-07T11:54:16.000+00:00",
+      "modificationDate": "2024-04-07T11:54:16.000+00:00"
+    },
+    "career": null,
+    "registrationDate": "2024-04-07T11:54:16.000+00:00",
+    "modificationDate": "2024-04-07T11:54:16.000+00:00"
+  },
+  "modificationDate": "2024-04-07T12:09:46.590+00:00"
+}
 ## DELETE: http://localhost:8080/api/reports/{id}

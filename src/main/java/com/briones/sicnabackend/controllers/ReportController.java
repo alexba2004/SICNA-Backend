@@ -1,7 +1,11 @@
 package com.briones.sicnabackend.controllers;
 
 import com.briones.sicnabackend.exceptions.ErrorResponse;
+import com.briones.sicnabackend.models.Person;
+import com.briones.sicnabackend.models.Product;
 import com.briones.sicnabackend.models.Report;
+import com.briones.sicnabackend.repositories.PersonRepository;
+import com.briones.sicnabackend.repositories.ProductRepository;
 import com.briones.sicnabackend.repositories.ReportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +24,12 @@ public class ReportController {
 
     @Autowired
     private ReportRepository reportRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
+
+    @Autowired
+    private PersonRepository personRepository; 
 
     // Obtener todos los reportes
     @GetMapping
@@ -41,15 +51,37 @@ public class ReportController {
 
     // Crear un nuevo reporte
     @PostMapping
-    public ResponseEntity<?> createReport(@RequestBody Report report) {
-        try {
-            report.setModificationDate(new Date());
-            Report createdReport = reportRepository.save(report);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdReport);
-        } catch (Exception e) {
-            ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error al crear el reporte");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    public ResponseEntity<Report> createReport(@RequestBody Report report) {
+        // Verificar si el producto prestado asociado al informe ya está administrado
+        Product borrowedProduct = report.getBorrowedProduct();
+        if (borrowedProduct != null && borrowedProduct.getId() != null) {
+            borrowedProduct = productRepository.findById(borrowedProduct.getId()).orElse(null);
         }
+        // Establecer el producto prestado en el informe
+        report.setBorrowedProduct(borrowedProduct);
+
+        // Verificar si el prestamista asociado al informe ya está administrado
+        Person lender = report.getLender();
+        if (lender != null && lender.getId() != null) {
+            lender = personRepository.findById(lender.getId()).orElse(null);
+        }
+        // Establecer el prestamista en el informe
+        report.setLender(lender);
+
+        // Verificar si el prestatario asociado al informe ya está administrado
+        Person borrower = report.getBorrower();
+        if (borrower != null && borrower.getId() != null) {
+            borrower = personRepository.findById(borrower.getId()).orElse(null);
+        }
+        // Establecer el prestatario en el informe
+        report.setBorrower(borrower);
+
+        // Establecer la fecha de modificación
+        report.setModificationDate(new Date());
+
+        // Guardar el informe
+        Report createdReport = reportRepository.save(report);
+        return new ResponseEntity<>(createdReport, HttpStatus.CREATED);
     }
 
     // Actualizar un reporte existente
