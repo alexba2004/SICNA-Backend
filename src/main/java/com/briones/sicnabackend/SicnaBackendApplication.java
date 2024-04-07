@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EntityScan("com.briones.sicnabackend.*")
+@EntityScan({"com.briones.sicnabackend.*", "com.briones.sicnabackend.config.*"})
 @EnableJpaRepositories("com.briones.sicnabackend.repositories")
 public class SicnaBackendApplication {
     public static void main(String[] args) {
