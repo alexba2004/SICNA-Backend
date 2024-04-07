@@ -119,7 +119,43 @@
 ## GET (ALL): http://localhost:8080/api/departments
 ## GET (ONE): http://localhost:8080/api/departments/{id}
 ## POST: http://localhost:8080/api/departments
+{
+  "name": "Departamento de Ventas",
+  "description": "Encargado de las ventas y comercialización de productos",
+  "area": {
+    "id": 1
+  },
+  "responsiblePerson": {
+    "id": 1
+  }
+}
 ## PUT: http://localhost:8080/api/departments/{id}
+{
+  "name": "Departamento de Ventas",
+  "description": "Encargado de las ventas y comercialización de productos",
+  "area": {
+    "id": 2,
+    "name": "Tecnologías de la Información",
+    "description": "Área especializada en el desarrollo de software"
+  },
+  "responsiblePerson": {
+    "id": 2,
+    "firstName": "Joan",
+    "lastName": "Salas",
+    "middleName": "Vera",
+    "birthDate": "1991-03-13T06:00:00.000+00:00",
+    "email": "josssand@gmail.com",
+    "phone": "764 111 4132",
+    "registrationNumber": "2201337",
+    "personType": "Docente",
+    "area": {
+      "id": 2,
+      "name": "Tecnologías de la Información",
+      "description": "Área especializada en el desarrollo de software"
+    },
+    "career": null
+  }
+}
 ## DELETE: http://localhost:8080/api/departments/{id}
 
 ## =====SPACES===== ##

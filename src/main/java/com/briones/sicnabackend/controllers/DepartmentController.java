@@ -1,13 +1,19 @@
 package com.briones.sicnabackend.controllers;
 
 import com.briones.sicnabackend.exceptions.ErrorResponse;
+import com.briones.sicnabackend.models.Area;
 import com.briones.sicnabackend.models.Department;
+import com.briones.sicnabackend.models.Person;
+import com.briones.sicnabackend.repositories.AreaRepository;
 import com.briones.sicnabackend.repositories.DepartmentRepository;
+import com.briones.sicnabackend.repositories.PersonRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +25,12 @@ public class DepartmentController {
 
     @Autowired
     private DepartmentRepository departmentRepository;
+
+    @Autowired
+    private AreaRepository areaRepository;
+
+    @Autowired
+    private PersonRepository personRepository;
 
     // Obtener todos los departamentos
     @GetMapping
@@ -40,14 +52,31 @@ public class DepartmentController {
 
     // Crear un nuevo departamento
     @PostMapping
-    public ResponseEntity<?> createDepartment(@RequestBody Department department) {
-        try {
-            Department createdDepartment = departmentRepository.save(department);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdDepartment);
-        } catch (Exception e) {
-            ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error al crear el departamento");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    public ResponseEntity<Department> createDepartment(@RequestBody Department department) {
+        // Verificar si el área asociada al departamento ya está administrada
+        Area area = department.getArea();
+        if (area != null && area.getId() != null) {
+            area = areaRepository.findById(area.getId()).orElse(null);
         }
+        // Establecer el área en el departamento
+        department.setArea(area);
+
+        // Verificar si la persona responsable asociada al departamento ya está administrada
+        Person responsiblePerson = department.getResponsiblePerson();
+        if (responsiblePerson != null && responsiblePerson.getId() != null) {
+            responsiblePerson = personRepository.findById(responsiblePerson.getId()).orElse(null);
+        }
+        // Establecer la persona responsable en el departamento
+        department.setResponsiblePerson(responsiblePerson);
+
+        // Establecer fechas de registro y modificación
+        Date currentDate = new Date();
+        department.setRegistrationDate(currentDate);
+        department.setModificationDate(currentDate);
+
+        // Guardar el departamento
+        Department createdDepartment = departmentRepository.save(department);
+        return new ResponseEntity<>(createdDepartment, HttpStatus.CREATED);
     }
 
     // Actualizar un departamento existente
