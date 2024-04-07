@@ -1,13 +1,18 @@
 package com.briones.sicnabackend.controllers;
 
 import com.briones.sicnabackend.exceptions.ErrorResponse;
+import com.briones.sicnabackend.models.Area;
+import com.briones.sicnabackend.models.Career;
 import com.briones.sicnabackend.models.Person;
+import com.briones.sicnabackend.repositories.AreaRepository;
+import com.briones.sicnabackend.repositories.CareerRepository;
 import com.briones.sicnabackend.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +24,12 @@ public class PersonController {
 
     @Autowired
     private PersonRepository personRepository;
+
+    @Autowired
+    private AreaRepository areaRepository;
+
+    @Autowired
+    private CareerRepository careerRepository;
 
     // Obtener todas las personas
     @GetMapping
@@ -40,14 +51,31 @@ public class PersonController {
 
     // Crear una nueva persona
     @PostMapping
-    public ResponseEntity<?> createPerson(@RequestBody Person person) {
-        try {
-            Person savedPerson = personRepository.save(person);
-            return ResponseEntity.status(HttpStatus.CREATED).body(savedPerson);
-        } catch (Exception e) {
-            ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error al crear la persona");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    public ResponseEntity<Person> createPerson(@RequestBody Person person) {
+        // Verificar si el área asociada a la persona ya está administrada
+        Area area = person.getArea();
+        if (area != null && area.getId() != null) {
+            area = areaRepository.findById(area.getId()).orElse(null);
         }
+        // Establecer el área en la persona
+        person.setArea(area);
+
+        // Verificar si la carrera asociada a la persona ya está administrada
+        Career career = person.getCareer();
+        if (career != null && career.getId() != null) {
+            career = careerRepository.findById(career.getId()).orElse(null);
+        }
+        // Establecer la carrera en la persona
+        person.setCareer(career);
+
+        // Establecer fechas de registro y modificación
+        Date currentDate = new Date();
+        person.setRegistrationDate(currentDate);
+        person.setModificationDate(currentDate);
+
+        // Guardar la persona
+        Person createdPerson = personRepository.save(person);
+        return new ResponseEntity<>(createdPerson, HttpStatus.CREATED);
     }
 
     // Actualizar una persona existente

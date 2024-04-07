@@ -18,18 +18,57 @@
 ## GET (ONE): http://localhost:8080/api/careers/{id}
 ## POST: http://localhost:8080/api/careers
 {
-  "name": "Desarrollo de Software Multiplataforma",
-  "description": "Carrera enfocada al desarrollo de software",
-  "area_id": 1
+  "name": "Mecatrónica",
+  "description": "Carrera enfocada en la automatización",
+  "area_id": 2
 }
 ## PUT: http://localhost:8080/api/careers/{id}
+{
+  "name": "Mecatrónica Área Automatización",
+  "description": "Carrera enfocada en la automatización",
+  "area_id": 2
+}
 ## DELETE: http://localhost:8080/api/careers/{id}
 
 ## =====PERSONS===== ##
 ## GET (ALL): http://localhost:8080/api/persons
 ## GET (ONE): http://localhost:8080/api/persons/{id}
 ## POST: http://localhost:8080/api/persons
+{
+  "firstName": "Raul",
+  "lastName": "Alavarez",
+  "middleName": "Ramirez",
+  "birthDate": "2004-03-16T06:00:00.000+00:00",
+  "email": "raul@gmail.com",
+  "phone": "764 111 1234",
+  "registrationNumber": "220145",
+  "personType": "Estudiante",
+  "area": {
+    "id": 2
+  }
+}
 ## PUT: http://localhost:8080/api/persons/{id}
+{
+  "id": 4,
+  "firstName": "Raul",
+  "lastName": "Alavarez",
+  "middleName": "Ramirez",
+  "birthDate": "2004-03-16T06:00:00.000+00:00",
+  "email": "raul@gmail.com",
+  "phone": "764 111 1234",
+  "registrationNumber": "220145",
+  "personType": "Estudiante",
+  "area": {
+    "id": 1,
+    "name": "Tecnologías de la Información",
+    "description": "Área especializada en el desarrollo de software",
+    "registrationDate": "2024-04-07T10:17:26.000+00:00",
+    "modificationDate": "2024-04-07T10:17:26.000+00:00"
+  },
+  "career": null,
+  "registrationDate": "2024-04-07T11:27:07.000+00:00",
+  "modificationDate": "2024-04-07T11:27:07.000+00:00"
+}
 ## DELETE: http://localhost:8080/api/persons/{id}
 
 ## =====USERS===== ##
