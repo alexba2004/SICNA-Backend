@@ -162,7 +162,79 @@
 ## GET (ALL): http://localhost:8080/api/spaces
 ## GET (ONE): http://localhost:8080/api/spaces/{id}
 ## POST: http://localhost:8080/api/spaces
+{
+  "name": "Oficina 101",
+  "description": "Oficina principal en el primer piso",
+  "department": {
+    "id": 1
+  },
+  "responsiblePerson": {
+    "id": 1
+  }
+}
 ## PUT: http://localhost:8080/api/spaces/{id}
+{
+  "name": "Oficina 101",
+  "description": "Oficina principal en el primer piso",
+  "department": {
+    "id": 2,
+    "name": "TI Docencia 1",
+    "description": "Departamento de TI",
+    "area": {
+      "id": 2,
+      "name": "Tecnologías de la Información",
+      "description": "Área especializada en el desarrollo de software",
+      "registrationDate": "2024-04-07T10:17:26.000+00:00",
+      "modificationDate": "2024-04-07T10:17:26.000+00:00"
+    },
+    "responsiblePerson": {
+      "id": 2,
+      "firstName": "Joan",
+      "lastName": "Salas",
+      "middleName": "Vera",
+      "birthDate": "1991-03-13T06:00:00.000+00:00",
+      "email": "joan@gmail.com",
+      "phone": "764 111 4132",
+      "registrationNumber": "2201337",
+      "personType": "Docente",
+      "area": {
+        "id": 2,
+        "name": "Tecnologías de la Información",
+        "description": "Área especializada en el desarrollo de software",
+        "registrationDate": "2024-04-07T10:17:26.000+00:00",
+        "modificationDate": "2024-04-07T10:17:26.000+00:00"
+      },
+      "career": null,
+      "registrationDate": "2024-04-07T10:17:26.000+00:00",
+      "modificationDate": "2024-04-07T10:17:26.000+00:00"
+    },
+    "registrationDate": "2024-04-07T10:17:26.000+00:00",
+    "modificationDate": "2024-04-07T10:17:26.000+00:00"
+  },
+  "responsiblePerson": {
+    "id": 2,
+    "firstName": "Joan",
+    "lastName": "Salas",
+    "middleName": "Vera",
+    "birthDate": "1991-03-13T06:00:00.000+00:00",
+    "email": "joan@gmail.com",
+    "phone": "764 111 4132",
+    "registrationNumber": "2201337",
+    "personType": "Docente",
+    "area": {
+      "id": 2,
+      "name": "Tecnologías de la Información",
+      "description": "Área especializada en el desarrollo de software",
+      "registrationDate": "2024-04-07T10:17:26.000+00:00",
+      "modificationDate": "2024-04-07T10:17:26.000+00:00"
+    },
+    "career": null,
+    "registrationDate": "2024-04-07T10:17:26.000+00:00",
+    "modificationDate": "2024-04-07T10:17:26.000+00:00"
+  },
+  "registrationDate": "2024-04-07T11:58:07.000+00:00",
+  "modificationDate": "2024-04-07T11:58:07.000+00:00"
+}
 ## DELETE: http://localhost:8080/api/spaces/{id}
 
 ## =====PRODUCTS===== ##
