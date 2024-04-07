@@ -1,17 +1,27 @@
 package com.briones.sicnabackend.controllers;
 
-import com.briones.sicnabackend.exceptions.ErrorResponse;
-import com.briones.sicnabackend.models.Career;
-import com.briones.sicnabackend.repositories.CareerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.briones.sicnabackend.exceptions.ErrorResponse;
+import com.briones.sicnabackend.models.Area;
+import com.briones.sicnabackend.models.Career;
+import com.briones.sicnabackend.repositories.AreaRepository;
+import com.briones.sicnabackend.repositories.CareerRepository;
 
 @RestController
 @RequestMapping("/api/careers")
@@ -19,6 +29,9 @@ public class CareerController {
 
     @Autowired
     private CareerRepository careerRepository;
+
+    @Autowired
+    private AreaRepository areaRepository;
 
     // Obtener todas las carreras
     @GetMapping
@@ -38,18 +51,22 @@ public class CareerController {
         }
     }
 
-    // Crear una nueva carrera
+    // Crear una carrera nueva
     @PostMapping
-    public ResponseEntity<?> createCareer(@RequestBody Career career) {
-        try {
-            Career savedCareer = careerRepository.save(career);
-            return ResponseEntity.status(HttpStatus.CREATED).body(savedCareer);
-        } catch (Exception e) {
-            ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error al crear la carrera");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    public ResponseEntity<Career> createCareer(@RequestBody Career career) {
+        // Obtener el área asociada a la carrera
+        Area area = career.getArea();
+        if (area != null && area.getId() != null) {
+            // Si el área ya tiene un ID, buscarla en la base de datos para asegurarse de que esté administrada
+            area = areaRepository.findById(area.getId()).orElse(null);
         }
+        // Establecer el área en la carrera (puede ser la instancia recuperada o la instancia original)
+        career.setArea(area);
+        // Guardar la carrera
+        Career createdCareer = careerRepository.save(career);
+        return new ResponseEntity<>(createdCareer, HttpStatus.CREATED);
     }
-
+    
     // Actualizar una carrera existente
     @PutMapping("/{id}")
     public ResponseEntity<?> updateCareer(@PathVariable Long id, @RequestBody Career updatedCareer) {

@@ -1,4 +1,4 @@
-## =====AREAS===== 
+## =====AREAS===== ##
 ## GET (ALL): http://localhost:8080/api/areas
 ## GET (ONE): http://localhost:8080/api/areas/{id}
 ## POST: http://localhost:8080/api/areas
@@ -12,3 +12,57 @@
   "description": "Área especializada en la electrónica y automatización"
 }
 ## DELETE: http://localhost:8080/api/areas/{id}
+
+## =====CAREERS===== ##
+## GET (ALL): http://localhost:8080/api/careers
+## GET (ONE): http://localhost:8080/api/careers/{id}
+## POST: http://localhost:8080/api/careers
+{
+  "name": "Desarrollo de Software Multiplataforma",
+  "description": "Carrera enfocada al desarrollo de software",
+  "area_id": 1
+}
+## PUT: http://localhost:8080/api/careers/{id}
+## DELETE: http://localhost:8080/api/careers/{id}
+
+## =====PERSONS===== ##
+## GET (ALL): http://localhost:8080/api/persons
+## GET (ONE): http://localhost:8080/api/persons/{id}
+## POST: http://localhost:8080/api/persons
+## PUT: http://localhost:8080/api/persons/{id}
+## DELETE: http://localhost:8080/api/persons/{id}
+
+## =====USERS===== ##
+## GET (ALL): http://localhost:8080/api/users
+## GET (ONE): http://localhost:8080/api/users/{id}
+## POST: http://localhost:8080/api/users
+## PUT: http://localhost:8080/api/users/{id}
+## DELETE: http://localhost:8080/api/users/{id}
+
+## =====DEPARTMENTS===== ##
+## GET (ALL): http://localhost:8080/api/departments
+## GET (ONE): http://localhost:8080/api/departments/{id}
+## POST: http://localhost:8080/api/departments
+## PUT: http://localhost:8080/api/departments/{id}
+## DELETE: http://localhost:8080/api/departments/{id}
+
+## =====SPACES===== ##
+## GET (ALL): http://localhost:8080/api/spaces
+## GET (ONE): http://localhost:8080/api/spaces/{id}
+## POST: http://localhost:8080/api/spaces
+## PUT: http://localhost:8080/api/spaces/{id}
+## DELETE: http://localhost:8080/api/spaces/{id}
+
+## =====PRODUCTS===== ##
+## GET (ALL): http://localhost:8080/api/products
+## GET (ONE): http://localhost:8080/api/products/{id}
+## POST: http://localhost:8080/api/products
+## PUT: http://localhost:8080/api/products/{id}
+## DELETE: http://localhost:8080/api/products/{id}
+
+## =====REPORTS===== ##
+## GET (ALL): http://localhost:8080/api/reports
+## GET (ONE): http://localhost:8080/api/reports/{id}
+## POST: http://localhost:8080/api/reports
+## PUT: http://localhost:8080/api/reports/{id}
+## DELETE: http://localhost:8080/api/reports/{id}
