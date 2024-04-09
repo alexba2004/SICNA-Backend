@@ -22,7 +22,7 @@ import com.briones.sicnabackend.models.Area;
 import com.briones.sicnabackend.repositories.AreaRepository;
 
 @RestController
-@RequestMapping("/api/areas")
+@RequestMapping("/sicna/areas")
 public class AreaController {
 
     @Autowired

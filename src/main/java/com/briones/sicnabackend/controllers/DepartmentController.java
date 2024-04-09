@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/departments")
+@RequestMapping("/sicna/departments")
 public class DepartmentController {
 
     @Autowired

@@ -24,7 +24,7 @@ import com.briones.sicnabackend.repositories.AreaRepository;
 import com.briones.sicnabackend.repositories.CareerRepository;
 
 @RestController
-@RequestMapping("/api/careers")
+@RequestMapping("/sicna/careers")
 public class CareerController {
 
     @Autowired

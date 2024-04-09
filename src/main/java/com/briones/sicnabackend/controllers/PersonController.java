@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/persons")
+@RequestMapping("/sicna/persons")
 public class PersonController {
 
     @Autowired
