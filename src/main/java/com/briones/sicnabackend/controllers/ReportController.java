@@ -26,6 +26,11 @@ public class ReportController {
     private ReportRepository reportRepository;
 
     @Autowired
+    public ReportController(ReportRepository reportRepository) {
+        this.reportRepository = reportRepository;
+    }
+
+    @Autowired
     private ProductRepository productRepository;
 
     @Autowired
@@ -46,6 +51,17 @@ public class ReportController {
             return ResponseEntity.ok(reportOptional.get());
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(HttpStatus.NOT_FOUND.value(), "Reporte no encontrado"));
+        }
+    }
+
+    // Obtener un reporte por su matricula
+    @GetMapping("/matricula/{registrationNumber}")
+    public ResponseEntity<?> getReportsByPersonRegistrationNumber(@PathVariable String registrationNumber) {
+        List<Report> reports = reportRepository.findByBorrower_RegistrationNumber(registrationNumber);
+        if (!reports.isEmpty()) {
+            return ResponseEntity.ok(reports);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(HttpStatus.NOT_FOUND.value(), "No se encontraron reportes para la persona con el número de registro proporcionado."));
         }
     }
 

@@ -154,10 +154,12 @@ public class DatabaseSeeder implements CommandLineRunner {
             try {
                 Optional<Person> optionalLender = personRepository.findById(1L); 
                 Optional<Person> optionalBorrower = personRepository.findById(2L); 
+                Optional<Person> optionalBorrower2 = personRepository.findById(3L); 
                 Optional<Product> optionalProduct = productRepository.findById(1L); 
                 if (optionalLender.isPresent() && optionalBorrower.isPresent() && optionalProduct.isPresent()) {
                     Person lender = optionalLender.get();
                     Person borrower = optionalBorrower.get();
+                    Person borrower2 = optionalBorrower2.get();
                     Product product = optionalProduct.get();
     
                     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -169,7 +171,7 @@ public class DatabaseSeeder implements CommandLineRunner {
                     startDate1 = formatter.parse("2024-02-13");
                     endDate1 = formatter.parse("2024-02-20");
                     Date returnDateLimit2 = formatter.parse("2024-02-20"); 
-                    saveReport(startDate1, endDate1, returnDateLimit2, "Entregado a tiempo", product, borrower, lender);
+                    saveReport(startDate1, endDate1, returnDateLimit2, "Adeudo", product, lender, borrower2);
                 }
             } catch (ParseException e) {
                 e.printStackTrace();
