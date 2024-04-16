@@ -28,6 +28,11 @@ public class UserController {
     private UserRepository userRepository;
 
     @Autowired
+    public UserController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    @Autowired
     private AreaRepository areaRepository;
 
     @Autowired
@@ -49,6 +54,17 @@ public class UserController {
         Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isPresent()) {
             return ResponseEntity.ok(userOptional.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(HttpStatus.NOT_FOUND.value(), "Usuario no encontrado"));
+        }
+    }
+
+    // Obtener un usuario por su matricula
+    @GetMapping("/matricula/{registrationNumber}")
+    public ResponseEntity<?> getUserByRegistrationNumber(@PathVariable String registrationNumber) {
+        User user = userRepository.findByPersonRegistrationNumber(registrationNumber);
+        if (user != null) {
+            return ResponseEntity.ok(user);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(HttpStatus.NOT_FOUND.value(), "Usuario no encontrado"));
         }
